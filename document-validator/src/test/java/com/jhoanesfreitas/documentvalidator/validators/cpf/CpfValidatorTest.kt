@@ -2,8 +2,8 @@ package com.jhoanesfreitas.documentvalidator.validators.cpf
 
 import com.jhoanesfreitas.documentvalidator.BuildConfig.FAKE_CPF
 import com.jhoanesfreitas.documentvalidator.BuildConfig.FAKE_INVALID_CPF
-import com.jhoanesfreitas.documentvalidator.validators.factories.CpfValidatorFactory
-import com.jhoanesfreitas.documentvalidator.validators.factories.DocumentValidatorFactory
+import com.jhoanesfreitas.documentvalidator.factories.CpfValidatorFactory
+import com.jhoanesfreitas.documentvalidator.factories.DocumentValidatorFactory
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

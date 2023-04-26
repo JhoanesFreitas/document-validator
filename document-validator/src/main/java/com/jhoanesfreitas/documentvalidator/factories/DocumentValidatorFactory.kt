@@ -1,4 +1,4 @@
-package com.jhoanesfreitas.documentvalidator.validators.factories
+package com.jhoanesfreitas.documentvalidator.factories
 
 import com.jhoanesfreitas.documentvalidator.validators.Validator
 
