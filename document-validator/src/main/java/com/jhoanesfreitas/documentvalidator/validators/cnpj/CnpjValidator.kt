@@ -9,7 +9,7 @@ private const val FIRST_CHECKER_POSITION = 12
 private const val IS_IT_VALID = true
 private const val IS_IT_INVALID = false
 
-class CnpjValidator : Validator {
+internal class CnpjValidator internal constructor() : Validator {
 
     private var originalDocument = ""
     private var cnpjWithoutMask = ""

@@ -25,6 +25,14 @@ def getFakeInvalidCnpj() {
     return getLocalProperties().getProperty("gpr.fakeInvalidCnpj")
 }
 
+def getFakeRg() {
+    return getLocalProperties().getProperty("gpr.fakeRg")
+}
+
+def getFakeInvalidRg() {
+    return getLocalProperties().getProperty("gpr.fakeInvalidRg")
+}
+
 android {
     namespace 'com.jhoanesfreitas.documentvalidator'
     compileSdk 33
@@ -41,6 +49,9 @@ android {
 
         buildConfigField "String", "FAKE_CNPJ", "\"" + getFakeCnpj() + "\""
         buildConfigField "String", "FAKE_INVALID_CNPJ", "\"" + getFakeInvalidCnpj() + "\""
+
+        buildConfigField "String", "FAKE_RG", "\"" + getFakeRg() + "\""
+        buildConfigField "String", "FAKE_INVALID_RG", "\"" + getFakeInvalidRg() + "\""
     }
 
     buildTypes {

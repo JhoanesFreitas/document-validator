@@ -1,5 +1,6 @@
-package com.jhoanesfreitas.documentvalidator.factories
+package com.jhoanesfreitas.documentvalidator.factories.cpf
 
+import com.jhoanesfreitas.documentvalidator.factories.DocumentValidatorFactory
 import com.jhoanesfreitas.documentvalidator.validators.Validator
 import com.jhoanesfreitas.documentvalidator.validators.cpf.CpfValidator
 

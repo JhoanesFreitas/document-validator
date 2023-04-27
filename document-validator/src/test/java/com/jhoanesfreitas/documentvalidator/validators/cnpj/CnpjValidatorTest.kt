@@ -2,7 +2,7 @@ package com.jhoanesfreitas.documentvalidator.validators.cnpj
 
 import com.jhoanesfreitas.documentvalidator.BuildConfig.FAKE_CNPJ
 import com.jhoanesfreitas.documentvalidator.BuildConfig.FAKE_INVALID_CNPJ
-import com.jhoanesfreitas.documentvalidator.factories.CnpjValidatorFactory
+import com.jhoanesfreitas.documentvalidator.factories.cnpj.CnpjValidatorFactory
 import com.jhoanesfreitas.documentvalidator.factories.DocumentValidatorFactory
 import org.junit.Assert
 import org.junit.Before
