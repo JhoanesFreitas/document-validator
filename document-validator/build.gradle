@@ -3,6 +3,36 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+def getLocalProperties() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties
+}
+
+def getFakeCpf() {
+    return getLocalProperties().getProperty("gpr.fakeCpf")
+}
+
+def getFakeInvalidCpf() {
+    return getLocalProperties().getProperty("gpr.fakeInvalidCpf")
+}
+
+def getFakeCnpj() {
+    return getLocalProperties().getProperty("gpr.fakeCnpj")
+}
+
+def getFakeInvalidCnpj() {
+    return getLocalProperties().getProperty("gpr.fakeInvalidCnpj")
+}
+
+def getFakeRg() {
+    return getLocalProperties().getProperty("gpr.fakeRg")
+}
+
+def getFakeInvalidRg() {
+    return getLocalProperties().getProperty("gpr.fakeInvalidRg")
+}
+
 android {
     namespace 'com.jhoanesfreitas.documentvalidator'
     compileSdk 33
@@ -13,6 +43,15 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        buildConfigField "String", "FAKE_CPF", "\"" + getFakeCpf() + "\""
+        buildConfigField "String", "FAKE_INVALID_CPF", "\"" + getFakeInvalidCpf() + "\""
+
+        buildConfigField "String", "FAKE_CNPJ", "\"" + getFakeCnpj() + "\""
+        buildConfigField "String", "FAKE_INVALID_CNPJ", "\"" + getFakeInvalidCnpj() + "\""
+
+        buildConfigField "String", "FAKE_RG", "\"" + getFakeRg() + "\""
+        buildConfigField "String", "FAKE_INVALID_RG", "\"" + getFakeInvalidRg() + "\""
     }
 
     buildTypes {
@@ -32,7 +71,7 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.10.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.8.0'
     testImplementation 'junit:junit:4.13.2'
