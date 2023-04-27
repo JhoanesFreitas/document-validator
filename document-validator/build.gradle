@@ -3,16 +3,26 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-def getFakeCpf() {
+def getLocalProperties() {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty("gpr.fakeCpf")
+    return properties
+}
+
+def getFakeCpf() {
+    return getLocalProperties().getProperty("gpr.fakeCpf")
 }
 
 def getFakeInvalidCpf() {
-    Properties properties = new Properties()
-    properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    return properties.getProperty("gpr.fakeInvalidCpf")
+    return getLocalProperties().getProperty("gpr.fakeInvalidCpf")
+}
+
+def getFakeCnpj() {
+    return getLocalProperties().getProperty("gpr.fakeCnpj")
+}
+
+def getFakeInvalidCnpj() {
+    return getLocalProperties().getProperty("gpr.fakeInvalidCnpj")
 }
 
 android {
@@ -28,6 +38,9 @@ android {
 
         buildConfigField "String", "FAKE_CPF", "\"" + getFakeCpf() + "\""
         buildConfigField "String", "FAKE_INVALID_CPF", "\"" + getFakeInvalidCpf() + "\""
+
+        buildConfigField "String", "FAKE_CNPJ", "\"" + getFakeCnpj() + "\""
+        buildConfigField "String", "FAKE_INVALID_CNPJ", "\"" + getFakeInvalidCnpj() + "\""
     }
 
     buildTypes {

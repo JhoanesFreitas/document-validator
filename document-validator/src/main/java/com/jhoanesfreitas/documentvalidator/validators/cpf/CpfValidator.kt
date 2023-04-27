@@ -29,11 +29,11 @@ internal class CpfValidator internal constructor() : Validator {
     }
 
     private fun validate(): Boolean {
-        removeMaskFromCpf()
+        removeCpfMask()
         return isCpfValid()
     }
 
-    private fun removeMaskFromCpf() {
+    private fun removeCpfMask() {
         cpfWithoutMask = originalDocument.removeSymbols()
     }
 
