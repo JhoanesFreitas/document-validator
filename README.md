@@ -18,7 +18,7 @@ Em seguida, você deve adicionar a dependência do projeto no arquivo gradle do 
 
 ```
 dependencies {
-    implementation 'com.github.JhoanesFreitas:document-validator:v0.0.1'
+    implementation 'com.github.JhoanesFreitas:document-validator:v0.0.2'
 }
 ```
 
