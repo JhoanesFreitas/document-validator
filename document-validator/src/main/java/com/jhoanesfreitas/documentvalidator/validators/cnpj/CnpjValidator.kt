@@ -1,9 +1,12 @@
 package com.jhoanesfreitas.documentvalidator.validators.cnpj
 
+import com.jhoanesfreitas.documentvalidator.exceptions.DocumentNumberSizeException
 import com.jhoanesfreitas.documentvalidator.exceptions.InvalidDocumentException
 import com.jhoanesfreitas.documentvalidator.validators.Validator
+import com.jhoanesfreitas.documentvalidator.validators.utils.checkNumberSize
 import com.jhoanesfreitas.documentvalidator.validators.utils.removeSymbols
 
+private const val CNPJ_NUMBER_SIZE = 14
 private const val FIRST_CHECKER_POSITION = 12
 
 private const val CNPJ_IS_VALID = true
@@ -36,6 +39,7 @@ internal class CnpjValidator internal constructor() : Validator {
 
     private fun isCnpjValid(): Boolean {
         return try {
+            checkNumberSize()
             checkFirstDigitalChecker()
             checkSecondDigitalChecker()
             CNPJ_IS_VALID
@@ -43,7 +47,13 @@ internal class CnpjValidator internal constructor() : Validator {
             CNPJ_IS_INVALID
         } catch (e: IllegalArgumentException) {
             CNPJ_IS_INVALID
+        } catch (e: DocumentNumberSizeException) {
+            CNPJ_IS_INVALID
         }
+    }
+
+    private fun checkNumberSize() {
+        cnpjWithoutMask.length.checkNumberSize(CNPJ_NUMBER_SIZE)
     }
 
     private fun checkFirstDigitalChecker() {
@@ -58,7 +68,6 @@ internal class CnpjValidator internal constructor() : Validator {
         return divideDigitalCheckToGetRealDigitalChecker(firstSequenceDigitalCheckerSum)
     }
 
-    @Throws(IllegalArgumentException::class)
     private fun sumFirstDigitalCheckerSequence() {
         var index = 5
 

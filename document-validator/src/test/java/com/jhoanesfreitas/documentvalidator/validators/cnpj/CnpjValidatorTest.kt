@@ -1,9 +1,8 @@
 package com.jhoanesfreitas.documentvalidator.validators.cnpj
 
-import com.jhoanesfreitas.documentvalidator.BuildConfig.FAKE_CNPJ
-import com.jhoanesfreitas.documentvalidator.BuildConfig.FAKE_INVALID_CNPJ
-import com.jhoanesfreitas.documentvalidator.factories.cnpj.CnpjValidatorFactory
+import com.jhoanesfreitas.documentvalidator.BuildConfig.*
 import com.jhoanesfreitas.documentvalidator.factories.DocumentValidatorFactory
+import com.jhoanesfreitas.documentvalidator.factories.cnpj.CnpjValidatorFactory
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
@@ -36,11 +35,29 @@ class CnpjValidatorTest {
     }
 
     @Test
-    fun cnpjValidator_validateCnpj_verifyIfCnpjIsInvalidAfterPassInvalidFormatNumber() {
+    fun cnpjValidator_validateCnpj_verifyIfCnpjIsInvalidAfterPassInvalidNumber() {
         val cnpjValidator = documentValidatorFactory.getDocumentValidator()
 
-        val isDocumentValid = cnpjValidator.validate("1asd")
+        val isDocumentValid = cnpjValidator.validate("1as.ded.oew/oooi-qo")
 
-        Assert.assertFalse("O Cnpj é válido mesmo passando um formáto inválido!", isDocumentValid)
+        Assert.assertFalse("O Cnpj é válido mesmo passando uma string com letras!", isDocumentValid)
+    }
+
+    @Test
+    fun cnpjValidator_validateCnpj_verifyIfCnpjIsInvalidAfterPassEmptyString() {
+        val cnpjValidator = documentValidatorFactory.getDocumentValidator()
+
+        val isDocumentValid = cnpjValidator.validate("")
+
+        Assert.assertFalse("O Cnpj é válido mesmo passando uma string vazia!", isDocumentValid)
+    }
+
+    @Test
+    fun cnpjValidator_validateCnpj_verifyIfCnpjIsInvalidAfterPassIncompleteNumber() {
+        val cnpjValidator = documentValidatorFactory.getDocumentValidator()
+
+        val isDocumentValid = cnpjValidator.validate(FAKE_INCOMPLETE_CNPJ)
+
+        Assert.assertFalse("O Cnpj é válido mesmo passando um CNPJ incompleto!", isDocumentValid)
     }
 }

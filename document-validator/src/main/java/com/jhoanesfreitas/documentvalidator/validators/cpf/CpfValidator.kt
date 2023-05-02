@@ -4,6 +4,7 @@ import com.jhoanesfreitas.documentvalidator.exceptions.DocumentNumberSizeExcepti
 import com.jhoanesfreitas.documentvalidator.exceptions.InvalidDocumentException
 import com.jhoanesfreitas.documentvalidator.exceptions.NoDecimalDigitException
 import com.jhoanesfreitas.documentvalidator.validators.Validator
+import com.jhoanesfreitas.documentvalidator.validators.utils.checkNumberSize
 import com.jhoanesfreitas.documentvalidator.validators.utils.removeSymbols
 
 private const val CPF_NUMBER_SIZE = 11
@@ -56,7 +57,7 @@ internal class CpfValidator internal constructor() : Validator {
     }
 
     private fun checkNumberSize() {
-        if (cpfWithoutMask.length != CPF_NUMBER_SIZE) throw DocumentNumberSizeException()
+        cpfWithoutMask.length.checkNumberSize(CPF_NUMBER_SIZE)
     }
 
     private fun checkFirstDigitalChecker() {
