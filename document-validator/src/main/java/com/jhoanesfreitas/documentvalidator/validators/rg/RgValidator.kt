@@ -1,8 +1,13 @@
 package com.jhoanesfreitas.documentvalidator.validators.rg
 
+import com.jhoanesfreitas.documentvalidator.exceptions.DocumentNumberSizeException
 import com.jhoanesfreitas.documentvalidator.exceptions.InvalidDocumentException
+import com.jhoanesfreitas.documentvalidator.exceptions.NoDecimalDigitException
 import com.jhoanesfreitas.documentvalidator.validators.Validator
+import com.jhoanesfreitas.documentvalidator.validators.utils.checkNumberSize
 import com.jhoanesfreitas.documentvalidator.validators.utils.removeSymbols
+
+private const val RG_NUMBER_SIZE = 9
 
 private const val RG_IS_VALID = true
 private const val RG_IS_INVALID = false
@@ -34,13 +39,20 @@ internal class RgValidator internal constructor() : Validator {
 
     private fun isRgValid(): Boolean {
         return try {
+            checkNumberSize()
             checkDigitalChecker()
             RG_IS_VALID
+        } catch (e: DocumentNumberSizeException) {
+            RG_IS_INVALID
         } catch (e: InvalidDocumentException) {
             RG_IS_INVALID
-        } catch (e: IllegalArgumentException) {
+        } catch (e: NoDecimalDigitException) {
             RG_IS_INVALID
         }
+    }
+
+    private fun checkNumberSize() {
+        rgWithoutMask.length.checkNumberSize(RG_NUMBER_SIZE)
     }
 
     private fun checkDigitalChecker() {

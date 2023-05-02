@@ -40,7 +40,7 @@ class CpfValidatorTest {
 
         val isDocumentValid = cpfValidator.validate("1as.dio.plk-nh")
 
-        Assert.assertFalse("O Cpf é válido mesmo passando um texto!", isDocumentValid)
+        Assert.assertFalse("O Cpf é válido mesmo passando uma string com letras!", isDocumentValid)
     }
 
     @Test
@@ -49,7 +49,7 @@ class CpfValidatorTest {
 
         val isDocumentValid = cpfValidator.validate("")
 
-        Assert.assertFalse("O Cpf é válido mesmo passando um formáto inválido!", isDocumentValid)
+        Assert.assertFalse("O Cpf é válido mesmo passando uma string vazia!", isDocumentValid)
     }
 
     @Test
@@ -58,6 +58,6 @@ class CpfValidatorTest {
 
         val isDocumentValid = cpfValidator.validate(FAKE_INCOMPLETE_CPF)
 
-        Assert.assertFalse("O Cpf é válido mesmo passando um formáto inválido!", isDocumentValid)
+        Assert.assertFalse("O Cpf é válido mesmo passando um CPF incompleto!", isDocumentValid)
     }
 }

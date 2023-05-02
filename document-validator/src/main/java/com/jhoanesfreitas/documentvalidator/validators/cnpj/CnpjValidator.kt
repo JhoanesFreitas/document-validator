@@ -2,6 +2,7 @@ package com.jhoanesfreitas.documentvalidator.validators.cnpj
 
 import com.jhoanesfreitas.documentvalidator.exceptions.DocumentNumberSizeException
 import com.jhoanesfreitas.documentvalidator.exceptions.InvalidDocumentException
+import com.jhoanesfreitas.documentvalidator.exceptions.NoDecimalDigitException
 import com.jhoanesfreitas.documentvalidator.validators.Validator
 import com.jhoanesfreitas.documentvalidator.validators.utils.checkNumberSize
 import com.jhoanesfreitas.documentvalidator.validators.utils.removeSymbols
@@ -43,11 +44,11 @@ internal class CnpjValidator internal constructor() : Validator {
             checkFirstDigitalChecker()
             checkSecondDigitalChecker()
             CNPJ_IS_VALID
+        } catch (e: DocumentNumberSizeException) {
+            CNPJ_IS_INVALID
         } catch (e: InvalidDocumentException) {
             CNPJ_IS_INVALID
-        } catch (e: IllegalArgumentException) {
-            CNPJ_IS_INVALID
-        } catch (e: DocumentNumberSizeException) {
+        } catch (e: NoDecimalDigitException) {
             CNPJ_IS_INVALID
         }
     }

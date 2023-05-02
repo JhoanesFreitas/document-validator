@@ -47,11 +47,11 @@ internal class CpfValidator internal constructor() : Validator {
             checkFirstDigitalChecker()
             checkSecondDigitalChecker()
             CPF_IS_VALID
+        } catch (e: DocumentNumberSizeException) {
+            CPF_IS_INVALID
         } catch (e: InvalidDocumentException) {
             CPF_IS_INVALID
         } catch (e: NoDecimalDigitException) {
-            CPF_IS_INVALID
-        } catch (e: DocumentNumberSizeException) {
             CPF_IS_INVALID
         }
     }
