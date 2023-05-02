@@ -17,6 +17,10 @@ def getFakeInvalidCpf() {
     return getLocalProperties().getProperty("gpr.fakeInvalidCpf")
 }
 
+def getIncompleteCpfNumber() {
+    return getLocalProperties().getProperty("gpr.fakeIncompleteCpf")
+}
+
 def getFakeCnpj() {
     return getLocalProperties().getProperty("gpr.fakeCnpj")
 }
@@ -25,12 +29,20 @@ def getFakeInvalidCnpj() {
     return getLocalProperties().getProperty("gpr.fakeInvalidCnpj")
 }
 
+def getIncompleteCnpjNumber() {
+    return getLocalProperties().getProperty("gpr.fakeIncompleteCnpj")
+}
+
 def getFakeRg() {
     return getLocalProperties().getProperty("gpr.fakeRg")
 }
 
 def getFakeInvalidRg() {
     return getLocalProperties().getProperty("gpr.fakeInvalidRg")
+}
+
+def getIncompleteRgNumber() {
+    return getLocalProperties().getProperty("gpr.fakeIncompleteRg")
 }
 
 android {
@@ -46,12 +58,15 @@ android {
 
         buildConfigField "String", "FAKE_CPF", "\"" + getFakeCpf() + "\""
         buildConfigField "String", "FAKE_INVALID_CPF", "\"" + getFakeInvalidCpf() + "\""
+        buildConfigField "String", "FAKE_INCOMPLETE_CPF", "\"" + getIncompleteCpfNumber() + "\""
 
         buildConfigField "String", "FAKE_CNPJ", "\"" + getFakeCnpj() + "\""
         buildConfigField "String", "FAKE_INVALID_CNPJ", "\"" + getFakeInvalidCnpj() + "\""
+        buildConfigField "String", "FAKE_INCOMPLETE_CNPJ", "\"" + getIncompleteCnpjNumber() + "\""
 
         buildConfigField "String", "FAKE_RG", "\"" + getFakeRg() + "\""
         buildConfigField "String", "FAKE_INVALID_RG", "\"" + getFakeInvalidRg() + "\""
+        buildConfigField "String", "FAKE_INCOMPLETE_RG", "\"" + getIncompleteRgNumber() + "\""
     }
 
     buildTypes {

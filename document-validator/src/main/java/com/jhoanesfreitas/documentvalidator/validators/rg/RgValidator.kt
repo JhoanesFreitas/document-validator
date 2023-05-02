@@ -1,6 +1,6 @@
 package com.jhoanesfreitas.documentvalidator.validators.rg
 
-import com.jhoanesfreitas.documentvalidator.validators.ValidateException
+import com.jhoanesfreitas.documentvalidator.exceptions.InvalidDocumentException
 import com.jhoanesfreitas.documentvalidator.validators.Validator
 import com.jhoanesfreitas.documentvalidator.validators.utils.removeSymbols
 
@@ -36,7 +36,7 @@ internal class RgValidator internal constructor() : Validator {
         return try {
             checkDigitalChecker()
             RG_IS_VALID
-        } catch (e: ValidateException) {
+        } catch (e: InvalidDocumentException) {
             RG_IS_INVALID
         } catch (e: IllegalArgumentException) {
             RG_IS_INVALID
@@ -46,7 +46,7 @@ internal class RgValidator internal constructor() : Validator {
     private fun checkDigitalChecker() {
         val digitalChecker = getDigitalChecker()
         if (rgWithoutMask.last().toString() != digitalChecker)
-            throw ValidateException("O dígito verificador é inválido!")
+            throw InvalidDocumentException("O dígito verificador é inválido!")
     }
 
     private fun getDigitalChecker(): String {
@@ -54,7 +54,6 @@ internal class RgValidator internal constructor() : Validator {
         return divideDigitalCheckToGetRealDigitalChecker(digitalCheckerSum)
     }
 
-    @Throws(IllegalArgumentException::class)
     private fun sumDigitalCheckerSequence() {
         var index = 2
 

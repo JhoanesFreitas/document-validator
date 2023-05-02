@@ -1,6 +1,6 @@
 package com.jhoanesfreitas.documentvalidator.validators.cnpj
 
-import com.jhoanesfreitas.documentvalidator.validators.ValidateException
+import com.jhoanesfreitas.documentvalidator.exceptions.InvalidDocumentException
 import com.jhoanesfreitas.documentvalidator.validators.Validator
 import com.jhoanesfreitas.documentvalidator.validators.utils.removeSymbols
 
@@ -39,7 +39,7 @@ internal class CnpjValidator internal constructor() : Validator {
             checkFirstDigitalChecker()
             checkSecondDigitalChecker()
             CNPJ_IS_VALID
-        } catch (e: ValidateException) {
+        } catch (e: InvalidDocumentException) {
             CNPJ_IS_INVALID
         } catch (e: IllegalArgumentException) {
             CNPJ_IS_INVALID
@@ -50,7 +50,7 @@ internal class CnpjValidator internal constructor() : Validator {
         val firstDigitalChecker = getFirstDigitalChecker()
 
         if (cnpjWithoutMask[FIRST_CHECKER_POSITION].digitToInt() != firstDigitalChecker)
-            throw ValidateException("O primeiro dígito verificador é inválido!")
+            throw InvalidDocumentException("O primeiro dígito verificador é inválido!")
     }
 
     private fun getFirstDigitalChecker(): Int {
@@ -72,7 +72,7 @@ internal class CnpjValidator internal constructor() : Validator {
         val secondDigitalChecker = getSecondDigitalChecker()
 
         if (cnpjWithoutMask.last().digitToInt() != secondDigitalChecker)
-            throw ValidateException("O primeiro dígito verificador é inválido!")
+            throw InvalidDocumentException("O primeiro dígito verificador é inválido!")
     }
 
     private fun getSecondDigitalChecker(): Int {

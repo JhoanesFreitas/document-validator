@@ -1,9 +1,12 @@
 package com.jhoanesfreitas.documentvalidator.validators.cpf
 
-import com.jhoanesfreitas.documentvalidator.validators.ValidateException
+import com.jhoanesfreitas.documentvalidator.exceptions.DocumentNumberSizeException
+import com.jhoanesfreitas.documentvalidator.exceptions.InvalidDocumentException
+import com.jhoanesfreitas.documentvalidator.exceptions.NoDecimalDigitException
 import com.jhoanesfreitas.documentvalidator.validators.Validator
 import com.jhoanesfreitas.documentvalidator.validators.utils.removeSymbols
 
+private const val CPF_NUMBER_SIZE = 11
 private const val FIRST_CHECKER_POSITION = 9
 private const val SECOND_CHECKER_POSITION = 10
 
@@ -39,22 +42,28 @@ internal class CpfValidator internal constructor() : Validator {
 
     private fun isCpfValid(): Boolean {
         return try {
+            checkNumberSize()
             checkFirstDigitalChecker()
             checkSecondDigitalChecker()
             CPF_IS_VALID
-        } catch (e: ValidateException) {
+        } catch (e: InvalidDocumentException) {
             CPF_IS_INVALID
-        } catch (e: IllegalArgumentException) {
+        } catch (e: NoDecimalDigitException) {
+            CPF_IS_INVALID
+        } catch (e: DocumentNumberSizeException) {
             CPF_IS_INVALID
         }
     }
 
-    @Throws(ValidateException::class)
+    private fun checkNumberSize() {
+        if (cpfWithoutMask.length != CPF_NUMBER_SIZE) throw DocumentNumberSizeException()
+    }
+
     private fun checkFirstDigitalChecker() {
         val firstDigitalChecker = getFirstDigitalChecker()
 
         if (cpfWithoutMask[FIRST_CHECKER_POSITION].digitToInt() != firstDigitalChecker)
-            throw ValidateException("O primeiro dígito verificador é inválido!")
+            throw InvalidDocumentException("O primeiro dígito verificador é inválido!")
     }
 
     private fun getFirstDigitalChecker(): Int {
@@ -63,22 +72,26 @@ internal class CpfValidator internal constructor() : Validator {
         return if (result == VALUE_THAT_SHOULD_CONSIDER_AS_ZERO) 0 else result
     }
 
-    @Throws(ValidateException::class)
     private fun sumFirstDigitalCheckerSequence() {
         var index = 10
 
         for (number: Char in cpfWithoutMask.toCharArray()) {
-            firstSequenceDigitalCheckerSum += (number.digitToInt() * index--)
+            firstSequenceDigitalCheckerSum += (digitToInt(number) * index--)
             if (index < 2) break
         }
     }
 
-    @Throws(IllegalStateException::class)
+    private fun digitToInt(char: Char): Int = try {
+        char.digitToInt()
+    } catch (e: IllegalArgumentException) {
+        throw NoDecimalDigitException()
+    }
+
     private fun checkSecondDigitalChecker() {
         val secondDigitChecker = getSecondDigitalChecker()
 
         if (cpfWithoutMask[SECOND_CHECKER_POSITION].digitToInt() != secondDigitChecker)
-            throw ValidateException("O segundo dígito verificador é inválido!")
+            throw InvalidDocumentException("O segundo dígito verificador é inválido!")
     }
 
     private fun getSecondDigitalChecker(): Int {
