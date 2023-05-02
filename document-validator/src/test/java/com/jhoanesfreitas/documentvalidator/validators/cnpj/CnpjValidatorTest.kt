@@ -34,4 +34,13 @@ class CnpjValidatorTest {
 
         Assert.assertFalse("O Cnpj é válido!", isDocumentValid)
     }
+
+    @Test
+    fun cnpjValidator_validateCnpj_verifyIfCnpjIsInvalidAfterPassInvalidFormatNumber() {
+        val cnpjValidator = documentValidatorFactory.getDocumentValidator()
+
+        val isDocumentValid = cnpjValidator.validate("1asd")
+
+        Assert.assertFalse("O Cnpj é válido mesmo passando um formáto inválido!", isDocumentValid)
+    }
 }

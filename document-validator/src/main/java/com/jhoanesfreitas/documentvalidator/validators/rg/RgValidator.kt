@@ -4,8 +4,8 @@ import com.jhoanesfreitas.documentvalidator.validators.ValidateException
 import com.jhoanesfreitas.documentvalidator.validators.Validator
 import com.jhoanesfreitas.documentvalidator.validators.utils.removeSymbols
 
-private const val IS_IT_VALID = true
-private const val IS_IT_INVALID = false
+private const val RG_IS_VALID = true
+private const val RG_IS_INVALID = false
 
 internal class RgValidator internal constructor() : Validator {
 
@@ -35,9 +35,11 @@ internal class RgValidator internal constructor() : Validator {
     private fun isRgValid(): Boolean {
         return try {
             checkDigitalChecker()
-            IS_IT_VALID
+            RG_IS_VALID
         } catch (e: ValidateException) {
-            IS_IT_INVALID
+            RG_IS_INVALID
+        } catch (e: IllegalArgumentException) {
+            RG_IS_INVALID
         }
     }
 
@@ -52,6 +54,7 @@ internal class RgValidator internal constructor() : Validator {
         return divideDigitalCheckToGetRealDigitalChecker(digitalCheckerSum)
     }
 
+    @Throws(IllegalArgumentException::class)
     private fun sumDigitalCheckerSequence() {
         var index = 2
 

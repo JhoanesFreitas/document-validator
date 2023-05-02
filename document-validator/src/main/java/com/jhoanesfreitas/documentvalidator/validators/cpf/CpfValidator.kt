@@ -9,8 +9,8 @@ private const val SECOND_CHECKER_POSITION = 10
 
 private const val VALUE_THAT_SHOULD_CONSIDER_AS_ZERO = 10
 
-private const val IS_IT_VALID = true
-private const val IS_IT_INVALID = false
+private const val CPF_IS_VALID = true
+private const val CPF_IS_INVALID = false
 
 internal class CpfValidator internal constructor() : Validator {
 
@@ -41,9 +41,11 @@ internal class CpfValidator internal constructor() : Validator {
         return try {
             checkFirstDigitalChecker()
             checkSecondDigitalChecker()
-            IS_IT_VALID
+            CPF_IS_VALID
         } catch (e: ValidateException) {
-            IS_IT_INVALID
+            CPF_IS_INVALID
+        } catch (e: IllegalArgumentException) {
+            CPF_IS_INVALID
         }
     }
 
@@ -61,6 +63,7 @@ internal class CpfValidator internal constructor() : Validator {
         return if (result == VALUE_THAT_SHOULD_CONSIDER_AS_ZERO) 0 else result
     }
 
+    @Throws(ValidateException::class)
     private fun sumFirstDigitalCheckerSequence() {
         var index = 10
 
@@ -70,6 +73,7 @@ internal class CpfValidator internal constructor() : Validator {
         }
     }
 
+    @Throws(IllegalStateException::class)
     private fun checkSecondDigitalChecker() {
         val secondDigitChecker = getSecondDigitalChecker()
 

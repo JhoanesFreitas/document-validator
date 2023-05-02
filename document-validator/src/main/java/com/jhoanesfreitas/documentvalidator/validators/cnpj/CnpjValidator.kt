@@ -6,8 +6,8 @@ import com.jhoanesfreitas.documentvalidator.validators.utils.removeSymbols
 
 private const val FIRST_CHECKER_POSITION = 12
 
-private const val IS_IT_VALID = true
-private const val IS_IT_INVALID = false
+private const val CNPJ_IS_VALID = true
+private const val CNPJ_IS_INVALID = false
 
 internal class CnpjValidator internal constructor() : Validator {
 
@@ -38,9 +38,11 @@ internal class CnpjValidator internal constructor() : Validator {
         return try {
             checkFirstDigitalChecker()
             checkSecondDigitalChecker()
-            IS_IT_VALID
+            CNPJ_IS_VALID
         } catch (e: ValidateException) {
-            IS_IT_INVALID
+            CNPJ_IS_INVALID
+        } catch (e: IllegalArgumentException) {
+            CNPJ_IS_INVALID
         }
     }
 
@@ -56,6 +58,7 @@ internal class CnpjValidator internal constructor() : Validator {
         return divideDigitalCheckToGetRealDigitalChecker(firstSequenceDigitalCheckerSum)
     }
 
+    @Throws(IllegalArgumentException::class)
     private fun sumFirstDigitalCheckerSequence() {
         var index = 5
 

@@ -34,4 +34,13 @@ class CpfValidatorTest {
 
         Assert.assertFalse("O Cpf é válido!", isDocumentValid)
     }
+
+    @Test
+    fun cpfValidator_validateCpf_verifyIfCpfIsInvalidAfterPassInvalidFormatNumber() {
+        val cpfValidator = documentValidatorFactory.getDocumentValidator()
+
+        val isDocumentValid = cpfValidator.validate("1asd")
+
+        Assert.assertFalse("O Cpf é válido mesmo passando um formáto inválido!", isDocumentValid)
+    }
 }

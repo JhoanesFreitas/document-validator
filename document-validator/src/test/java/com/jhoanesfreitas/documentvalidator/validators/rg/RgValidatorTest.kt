@@ -34,4 +34,13 @@ class RgValidatorTest {
 
         Assert.assertTrue("O Rg é válido!", isDocumentValid)
     }
+
+    @Test
+    fun rgValidator_validateRg_verifyIfRgIsInvalidAfterPassInvalidFormatNumber() {
+        val rgValidator = documentValidatorFactory.getDocumentValidator()
+
+        val isDocumentValid = rgValidator.validate("1asd")
+
+        Assert.assertFalse("O Rg é válido mesmo passando um formáto inválido!", isDocumentValid)
+    }
 }
