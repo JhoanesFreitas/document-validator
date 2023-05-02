@@ -1,11 +1,16 @@
 package com.jhoanesfreitas.documentvalidator.validators.rg
 
-import com.jhoanesfreitas.documentvalidator.validators.ValidateException
+import com.jhoanesfreitas.documentvalidator.exceptions.DocumentNumberSizeException
+import com.jhoanesfreitas.documentvalidator.exceptions.InvalidDocumentException
+import com.jhoanesfreitas.documentvalidator.exceptions.NoDecimalDigitException
 import com.jhoanesfreitas.documentvalidator.validators.Validator
+import com.jhoanesfreitas.documentvalidator.validators.utils.checkNumberSize
 import com.jhoanesfreitas.documentvalidator.validators.utils.removeSymbols
 
-private const val IS_IT_VALID = true
-private const val IS_IT_INVALID = false
+private const val RG_NUMBER_SIZE = 9
+
+private const val RG_IS_VALID = true
+private const val RG_IS_INVALID = false
 
 internal class RgValidator internal constructor() : Validator {
 
@@ -34,17 +39,26 @@ internal class RgValidator internal constructor() : Validator {
 
     private fun isRgValid(): Boolean {
         return try {
+            checkNumberSize()
             checkDigitalChecker()
-            IS_IT_VALID
-        } catch (e: ValidateException) {
-            IS_IT_INVALID
+            RG_IS_VALID
+        } catch (e: DocumentNumberSizeException) {
+            RG_IS_INVALID
+        } catch (e: InvalidDocumentException) {
+            RG_IS_INVALID
+        } catch (e: NoDecimalDigitException) {
+            RG_IS_INVALID
         }
+    }
+
+    private fun checkNumberSize() {
+        rgWithoutMask.length.checkNumberSize(RG_NUMBER_SIZE)
     }
 
     private fun checkDigitalChecker() {
         val digitalChecker = getDigitalChecker()
         if (rgWithoutMask.last().toString() != digitalChecker)
-            throw ValidateException("O dígito verificador é inválido!")
+            throw InvalidDocumentException("O dígito verificador é inválido!")
     }
 
     private fun getDigitalChecker(): String {

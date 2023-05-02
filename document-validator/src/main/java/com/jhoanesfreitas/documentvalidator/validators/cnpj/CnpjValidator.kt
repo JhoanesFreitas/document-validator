@@ -1,13 +1,17 @@
 package com.jhoanesfreitas.documentvalidator.validators.cnpj
 
-import com.jhoanesfreitas.documentvalidator.validators.ValidateException
+import com.jhoanesfreitas.documentvalidator.exceptions.DocumentNumberSizeException
+import com.jhoanesfreitas.documentvalidator.exceptions.InvalidDocumentException
+import com.jhoanesfreitas.documentvalidator.exceptions.NoDecimalDigitException
 import com.jhoanesfreitas.documentvalidator.validators.Validator
+import com.jhoanesfreitas.documentvalidator.validators.utils.checkNumberSize
 import com.jhoanesfreitas.documentvalidator.validators.utils.removeSymbols
 
+private const val CNPJ_NUMBER_SIZE = 14
 private const val FIRST_CHECKER_POSITION = 12
 
-private const val IS_IT_VALID = true
-private const val IS_IT_INVALID = false
+private const val CNPJ_IS_VALID = true
+private const val CNPJ_IS_INVALID = false
 
 internal class CnpjValidator internal constructor() : Validator {
 
@@ -36,19 +40,28 @@ internal class CnpjValidator internal constructor() : Validator {
 
     private fun isCnpjValid(): Boolean {
         return try {
+            checkNumberSize()
             checkFirstDigitalChecker()
             checkSecondDigitalChecker()
-            IS_IT_VALID
-        } catch (e: ValidateException) {
-            IS_IT_INVALID
+            CNPJ_IS_VALID
+        } catch (e: DocumentNumberSizeException) {
+            CNPJ_IS_INVALID
+        } catch (e: InvalidDocumentException) {
+            CNPJ_IS_INVALID
+        } catch (e: NoDecimalDigitException) {
+            CNPJ_IS_INVALID
         }
+    }
+
+    private fun checkNumberSize() {
+        cnpjWithoutMask.length.checkNumberSize(CNPJ_NUMBER_SIZE)
     }
 
     private fun checkFirstDigitalChecker() {
         val firstDigitalChecker = getFirstDigitalChecker()
 
         if (cnpjWithoutMask[FIRST_CHECKER_POSITION].digitToInt() != firstDigitalChecker)
-            throw ValidateException("O primeiro dígito verificador é inválido!")
+            throw InvalidDocumentException("O primeiro dígito verificador é inválido!")
     }
 
     private fun getFirstDigitalChecker(): Int {
@@ -69,7 +82,7 @@ internal class CnpjValidator internal constructor() : Validator {
         val secondDigitalChecker = getSecondDigitalChecker()
 
         if (cnpjWithoutMask.last().digitToInt() != secondDigitalChecker)
-            throw ValidateException("O primeiro dígito verificador é inválido!")
+            throw InvalidDocumentException("O primeiro dígito verificador é inválido!")
     }
 
     private fun getSecondDigitalChecker(): Int {
